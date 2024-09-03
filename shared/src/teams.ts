@@ -1,14 +1,16 @@
 const TeamService = game.GetService("Teams");
 
-export function createTeams() {
-	const republic = new Instance("Team");
-	republic.Name = "Republic";
-	republic.TeamColor = BrickColor.Blue();
+export function createTeams(): [Team, Team] {
+	const good = new Instance("Team");
+	good.Name = "Republic";
+	good.TeamColor = BrickColor.Blue();
 
-	const separatists = new Instance("Team");
-	separatists.Name = "Separatists";
-	separatists.TeamColor = BrickColor.Red();
+	const bad = new Instance("Team");
+	bad.Name = "Separatists";
+	bad.TeamColor = BrickColor.Red();
 
-	republic.Parent = TeamService;
-	separatists.Parent = TeamService;
+	good.Parent = TeamService;
+	bad.Parent = TeamService;
+
+	return [good, bad];
 }
