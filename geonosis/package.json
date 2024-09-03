@@ -25,7 +25,6 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@rbxts/adamraichu__local_rbx-swa-common": "file:../shared",
-    "adamraichu__local_rbx-swa-common": "file:../shared/adamraichu__local_rbx-swa-common-0.0.1.tgz"
+    "@rbxts/adamraichu__local_rbx-swa-common": "file:../shared"
   }
 }
