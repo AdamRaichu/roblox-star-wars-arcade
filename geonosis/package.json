@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "rbxtsc",
-    "watch": "rbxtsc -w"
+    "watch": "rbxtsc -w",
+    "refresh": "bash scripts/refresh.sh"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@rbxts/adamraichu__local_rbx-swa-common": "file:../shared"
+    "@rbxts/adamraichu__local_rbx-swa-common": "file:../shared",
+    "@rbxts/rbx-gui-library": "^0.2.8"
   }
 }

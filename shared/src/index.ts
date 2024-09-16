@@ -1,22 +1,22 @@
 export * as teams from "./teams";
 import * as logic from "./game_logic";
+export * as ui from "./ui/radialTest";
 export { logic };
 
 declare global {
-	interface GameStatus {
-		Bases: Base[][];
+	export interface GameStatus {
+		bases: logic.Base[][];
 	}
 
-	interface Base {
-		Owner: Team;
-		N: logic.DestructibleBuilding;
-		NE: logic.DestructibleBuilding;
-		E: logic.DestructibleBuilding;
-		SE: logic.DestructibleBuilding;
-		S: logic.DestructibleBuilding;
-		SW: logic.DestructibleBuilding;
-		W: logic.DestructibleBuilding;
-		NW: logic.DestructibleBuilding;
+	export interface GameSettings {
+		gameType: GameType;
+		prebuiltBuildings: [Vector2, logic.DestructibleBuilding][];
+		availableBuildings: ForBothTeams<logic.DestructibleBuilding[][]>;
+		initialFunds: ForBothTeams<number>;
+	}
+
+	enum GameType {
+		CommandCenter,
 	}
 
 	export interface RideableModel extends Model {
@@ -24,10 +24,16 @@ declare global {
 		Base: BasePart;
 		Engine: BasePart;
 		CONFIG: VehicleConfigData;
+		DismountLocation: Part;
 	}
 
 	interface VehicleConfigData extends Folder {
 		ControllingTeam: StringValue;
 		CanBeHijacked: BoolValue;
+	}
+
+	interface ForBothTeams<T> {
+		Republic: T;
+		Separatist: T;
 	}
 }

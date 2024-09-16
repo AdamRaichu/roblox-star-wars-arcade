@@ -1,3 +1,5 @@
+import { mountRideable, playerCanMount } from "./vehicles";
+
 function createPrompt(
 	parent: Instance,
 	object: string,
@@ -18,15 +20,42 @@ function createPrompt(
 	return prompt;
 }
 
-export function createPromptForRideable(seat: VehicleSeat): ProximityPrompt {
+export function createPromptForRideable(vehicle: RideableModel): ProximityPrompt {
 	const rideButton = createPrompt(
-		seat,
-		seat?.Parent?.Name ?? "Unknown Rideable",
-		"Ride",
-		1,
+		vehicle.VehicleSeat,
+		vehicle.Name,
+		"Mount/Dismount",
+		0.25,
 		Enum.KeyCode.ButtonY,
 		Enum.KeyCode.R,
 	);
 	rideButton.MaxActivationDistance = 10;
+	rideButton.RequiresLineOfSight = false;
+
+	let lastRider: Model | undefined;
+
+	rideButton.Triggered.Connect((player) => {
+		const seat = vehicle.VehicleSeat;
+		const hum = seat.Occupant as Humanoid | undefined;
+
+		print(`Player: ${player}; Occupant: ${hum}`);
+		if (hum?.Parent?.Name === player.Name) {
+			hum.Sit = false;
+			task.wait(0.25);
+			const rootPart = player.Character?.PrimaryPart as BasePart;
+			// rootPart.Position = rootPart.Position.add(rootPart.CFrame.RightVector.mul(-10));
+			player?.Character?.MoveTo(vehicle.DismountLocation.Position);
+			hum.ResetPropertyToDefault("JumpPower");
+			return;
+		}
+		const [canMount, reason] = playerCanMount(player, vehicle);
+		if (canMount) {
+			mountRideable(player, vehicle);
+			((player.Character as Model).FindFirstChildOfClass("Humanoid") as Humanoid).JumpPower = 0;
+		} else {
+			warn(`Player ${player.Name} tried to mount vehicle ${vehicle.Name}, but failed: ${reason}`);
+		}
+	});
+
 	return rideButton;
 }

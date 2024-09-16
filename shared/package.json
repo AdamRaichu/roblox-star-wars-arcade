@@ -1,9 +1,9 @@
 {
   "name": "@rbxts/adamraichu__local_rbx-swa-common",
-  "version": "0.0.1",
+  "version": "0.0.47",
   "main": "out/init.lua",
   "scripts": {
-    "build": "rbxtsc --type package",
+    "build": "npm version patch && rbxtsc --type package",
     "watch": "rbxtsc --type package -w",
     "prepublishOnly": "npm run build"
   },
@@ -14,11 +14,10 @@
   "types": "out/index.d.ts",
   "files": [
     "out",
-    "!**/*.tsbuildinfo",
-    "types"
+    "!**/*.tsbuildinfo"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "devDependencies": {
     "@rbxts/compiler-types": "^2.3.0-types.2",
@@ -32,5 +31,8 @@
     "prettier": "^3.3.3",
     "roblox-ts": "^2.3.0",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@rbxts/rbx-gui-library": "^0.2.8"
   }
 }
