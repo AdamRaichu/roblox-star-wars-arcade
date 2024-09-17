@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/adamraichu__local_rbx-swa-common",
-  "version": "0.0.47",
+  "version": "0.0.49",
   "main": "out/init.lua",
   "scripts": {
     "build": "npm version patch && rbxtsc --type package",
@@ -29,10 +29,14 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-roblox-ts": "^0.0.36",
     "prettier": "^3.3.3",
-    "roblox-ts": "^2.3.0",
-    "typescript": "^5.5.4"
+    "rbxts-transformer-flamework": "^1.2.3",
+    "roblox-ts": "^3.0.0",
+    "typescript": "=5.5.3"
   },
   "dependencies": {
+    "@flamework/components": "^1.2.3",
+    "@flamework/core": "^1.2.3",
+    "@flamework/networking": "^1.2.3",
     "@rbxts/rbx-gui-library": "^0.2.8"
   }
 }

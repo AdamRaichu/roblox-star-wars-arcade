@@ -1,6 +1,5 @@
 export * as teams from "./teams";
 import * as logic from "./game_logic";
-export * as ui from "./ui/radialTest";
 export { logic };
 
 declare global {
