@@ -20,8 +20,8 @@ declare global {
 
 	export interface RideableModel extends Model {
 		VehicleSeat: VehicleSeat;
-		Base: BasePart;
-		Engine: BasePart;
+		Base: Part;
+		Engine: Part;
 		CONFIG: VehicleConfigData;
 		DismountLocation: Part;
 	}
@@ -29,6 +29,10 @@ declare global {
 	interface VehicleConfigData extends Folder {
 		ControllingTeam: StringValue;
 		CanBeHijacked: BoolValue;
+	}
+
+	interface WithHitbox extends Instance {
+		Hitbox: Part;
 	}
 
 	interface ForBothTeams<T> {
