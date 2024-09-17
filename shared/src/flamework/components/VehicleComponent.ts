@@ -1,9 +1,10 @@
 import { BaseComponent, Component } from "@flamework/components";
 import { OnStart } from "@flamework/core";
-import { createPrompt } from "./utils";
+import { createPrompt } from "../utils";
 
 @Component({ tag: "vehicle-component-tag" })
-export class VehicleComponent extends BaseComponent<unknown, RideableModel> implements OnStart {
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export class VehicleComponent extends BaseComponent<{}, RideableModel> implements OnStart {
 	private lastRider?: Model = undefined;
 
 	constructor() {
@@ -27,24 +28,32 @@ export class VehicleComponent extends BaseComponent<unknown, RideableModel> impl
 		rideButton.MaxActivationDistance = 10;
 		rideButton.RequiresLineOfSight = false;
 
+		print(`Adding listener to ${this.instance.GetFullName()}`);
+		print(this.instance.VehicleSeat.GetChildren());
+
 		rideButton.Triggered.Connect((player) => {
+			print(`Listener triggered for ${this.instance.GetFullName()}`);
 			const seat = this.instance.VehicleSeat;
 			const hum = seat.Occupant as Humanoid | undefined;
 
 			print(`Player: ${player}; Occupant: ${hum}`);
+			// leave vehicle
 			if (hum?.Parent?.Name === player.Name) {
 				hum.Sit = false;
 				task.wait(0.25);
 				const rootPart = player.Character?.PrimaryPart as BasePart;
-				// rootPart.Position = rootPart.Position.add(rootPart.CFrame.RightVector.mul(-10));
 				player?.Character?.MoveTo(this.instance.DismountLocation.Position);
 				hum.ResetPropertyToDefault("JumpPower");
 				return;
 			}
+
+			// mount vehicle
 			const [canMount, reason] = this.playerCanMount(player);
 			if (canMount) {
 				this.mountRider(player);
-				((player.Character as Model).FindFirstChildOfClass("Humanoid") as Humanoid).JumpPower = 0;
+
+				const hum = (player.Character as Model).FindFirstChildOfClass("Humanoid") as Humanoid;
+				hum.JumpPower = 0;
 			} else {
 				warn(`Player ${player.Name} tried to mount vehicle ${this.instance.Name}, but failed: ${reason}`);
 			}
@@ -59,6 +68,7 @@ export class VehicleComponent extends BaseComponent<unknown, RideableModel> impl
 			return [false, "Vehicle is already occupied!"];
 		}
 
+		// eslint-disable-next-line roblox-ts/lua-truthiness
 		if (config.ControllingTeam.Value !== (player.Team?.Name ?? "__NO_TEAM__") && !config.CanBeHijacked.Value) {
 			return [false, "Vehicle belongs to the other team, and cannot currently be hijacked!"];
 		}
@@ -78,10 +88,6 @@ export class VehicleComponent extends BaseComponent<unknown, RideableModel> impl
 			warn(this.instance);
 			return;
 		}
-
-		player.SetAttribute("JumpPower", 0);
-		print("Setting jump power to 0");
-		print(player.GetAttribute("JumpPower"));
 
 		this.instance.VehicleSeat.Sit(hum);
 	}

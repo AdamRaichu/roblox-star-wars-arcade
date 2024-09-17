@@ -16,7 +16,7 @@ menu.DeadZoneOut = 1;
 menu.Frame.Position = UDim2.fromScale(0.5, 0.5);
 menu.Frame.AnchorPoint = new Vector2(0.5, 0.5);
 menu.Frame.Size = UDim2.fromScale(0.5, 0.5);
-menu.Frame.Parent = buildMenu;
+// menu.Frame.Parent = buildMenu; // FIXME:
 
 menu.Hover.Connect((oldIndex: number, newIndex: number) => {
   print(`from ${oldIndex} to ${newIndex}`);

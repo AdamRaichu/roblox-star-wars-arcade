@@ -1,5 +1,7 @@
-export * as teams from "./teams";
+import { Flamework } from "@flamework/core";
 import * as logic from "./game_logic";
+
+export * as teams from "./teams";
 export { logic };
 
 declare global {

@@ -9,3 +9,9 @@ Flamework.addPaths("node_modules/@rbxts/Star Wars Arcade - Shared Library/flamew
 Flamework.ignite();
 
 print("Flamework started");
+
+task.wait(5);
+
+const clone = game.Workspace.MTT.Clone();
+clone.Name = "MTT Number Dos";
+clone.Parent = game.Workspace;
