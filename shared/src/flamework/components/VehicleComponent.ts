@@ -1,12 +1,14 @@
-import { BaseComponent, Component } from "@flamework/components";
+import { Component } from "@flamework/components";
 import { OnStart } from "@flamework/core";
 import { createPrompt } from "../utils";
+import { WithHealthComponent } from "./WithHealthComponent";
 
 @Component({ tag: "vehicle-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export class VehicleComponent extends BaseComponent<{}, RideableModel> implements OnStart {
+export class VehicleComponent extends WithHealthComponent<{}, RideableModel> implements OnStart {
 	private lastRider?: Model = undefined;
 
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 	constructor() {
 		super();
 	}

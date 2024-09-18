@@ -20,7 +20,7 @@ declare global {
 		CommandCenter,
 	}
 
-	export interface RideableModel extends Model {
+	export interface RideableModel extends ModelWithHealth {
 		VehicleSeat: VehicleSeat;
 		Base: Part;
 		Engine: Part;
@@ -33,8 +33,21 @@ declare global {
 		CanBeHijacked: BoolValue;
 	}
 
-	interface WithHitbox extends Instance {
+	/**
+	 * See `WithHealthComponent`
+	 */
+	interface ModelWithHealth extends Model {
+		HealthConfig: HealthConfigData;
+	}
+
+	interface HealthConfigData extends Folder {
 		Hitbox: Part;
+
+		CurrentHealth: IntValue;
+		// Intended to be static.
+		MaxHealth: IntValue;
+		HealthRegenAmount: IntValue;
+		HealthRegenInterval: NumberValue;
 	}
 
 	interface ForBothTeams<T> {
