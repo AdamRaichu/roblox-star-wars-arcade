@@ -9,6 +9,8 @@ export class WithHealthComponent<A extends {}, I extends ModelWithHealth>
 {
 	protected alive: boolean = false;
 	protected config?: HealthConfigData;
+	private _onDeath: BindableEvent = new Instance("BindableEvent");
+	public onDeath: RBXScriptSignal = this._onDeath.Event;
 
 	constructor() {
 		super();
@@ -35,6 +37,21 @@ export class WithHealthComponent<A extends {}, I extends ModelWithHealth>
 				newHealth = math.min(newHealth, maxHealth);
 				this.config.CurrentHealth.Value = newHealth;
 			}
+			resolve();
 		});
+	}
+
+	damage(amount: number): void {
+		if (typeIs(this.config, "nil")) {
+			return;
+		}
+
+		const currentHealth = this.config.CurrentHealth.Value;
+		const newHealth = math.max(currentHealth - amount, 0);
+		this.config.CurrentHealth.Value = newHealth;
+		if (newHealth <= 0) {
+			this.alive = false;
+			this._onDeath.Fire();
+		}
 	}
 }
