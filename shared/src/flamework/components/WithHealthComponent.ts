@@ -3,10 +3,7 @@ import { OnStart } from "@flamework/core";
 
 @Component({ tag: "with-health" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export class WithHealthComponent<A extends {}, I extends ModelWithHealth>
-	extends BaseComponent<A, I>
-	implements OnStart
-{
+export abstract class WithHealthComponent<A extends {}, I extends ModelWithHealth> extends BaseComponent<A, I> {
 	protected alive: boolean = false;
 	protected config?: HealthConfigData;
 	private _onDeath: BindableEvent = new Instance("BindableEvent");
@@ -14,13 +11,7 @@ export class WithHealthComponent<A extends {}, I extends ModelWithHealth>
 
 	constructor() {
 		super();
-	}
 
-	setAlive(alive: boolean) {
-		this.alive = alive;
-	}
-
-	onStart(): void {
 		this.config = this.instance.HealthConfig;
 
 		// Health regen.
@@ -39,6 +30,10 @@ export class WithHealthComponent<A extends {}, I extends ModelWithHealth>
 			}
 			resolve();
 		});
+
+		this.onDeath.Once(() => {
+			this.deathAnimation();
+		});
 	}
 
 	damage(amount: number): void {
@@ -54,4 +49,9 @@ export class WithHealthComponent<A extends {}, I extends ModelWithHealth>
 			this._onDeath.Fire();
 		}
 	}
+
+	/**
+	 * Handle any cleanup that should run when this dies.
+	 */
+	abstract deathAnimation(): void;
 }

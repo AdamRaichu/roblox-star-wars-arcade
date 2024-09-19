@@ -1,3 +1,3 @@
-interface Workspace extends WorldRoot {
+interface ServerStorage extends Instance {
   MTT: RideableModel;
 }

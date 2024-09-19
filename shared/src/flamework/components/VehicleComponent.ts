@@ -1,24 +1,25 @@
 import { Component } from "@flamework/components";
-import { OnStart } from "@flamework/core";
 import { createPrompt } from "../utils";
 import { WithHealthComponent } from "./WithHealthComponent";
 
 @Component({ tag: "vehicle-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export class VehicleComponent extends WithHealthComponent<{}, RideableModel> implements OnStart {
+export class VehicleComponent extends WithHealthComponent<{}, RideableModel> {
+	deathAnimation(): void {
+		error("Unimplemented");
+	}
+
 	private lastRider?: Model = undefined;
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 	constructor() {
 		super();
-	}
-
-	onStart(): void {
 		print(`Found vehicle ${this.instance.GetFullName()}`);
 		this.addPrompt();
 	}
 
 	addPrompt(): void {
+		print(`Adding prompt to ${this.instance.GetFullName()}`);
 		const rideButton = createPrompt(
 			this.instance.VehicleSeat,
 			this.instance.Name,

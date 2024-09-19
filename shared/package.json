@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/adamraichu__local_rbx-swa-common",
-  "version": "0.0.72",
+  "version": "0.0.77",
   "main": "out/init.lua",
   "scripts": {
     "build": "npm version patch && rbxtsc --type package",
