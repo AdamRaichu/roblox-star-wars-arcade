@@ -5,11 +5,6 @@ import { Direction } from "../../utils";
 @Component({ tag: "building-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export class BuildingComponent extends WithHealthComponent<{}, DestructibleBuilding> {
-  constructor() {
-    super();
-    print(`Found building ${this.instance.GetFullName()}`);
-  }
-
   deathAnimation(): void {
     error("Unimplemented method deathAnimation");
   }

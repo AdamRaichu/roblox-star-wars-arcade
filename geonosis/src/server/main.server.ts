@@ -43,3 +43,6 @@ Players.PlayerAdded.Connect((player) => {
   });
 });
  */
+
+task.wait(5);
+sendSystemMessageTo("Hello, world!", "ALL");
