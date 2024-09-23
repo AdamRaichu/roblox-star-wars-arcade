@@ -1,10 +1,10 @@
 import { RadialMenu } from "@rbxts/rbx-gui-library";
-import { makeHello } from "shared/module";
+import { client } from "@rbxts/adamraichu__local_rbx-swa-common";
 
 const Players = game.GetService("Players");
 const gui = Players.LocalPlayer.WaitForChild("PlayerGui");
 
-print(makeHello("main.client.ts"));
+client.playerSetup();
 
 const buildMenu = new Instance("ScreenGui");
 buildMenu.Name = "BuildMenu";

@@ -29,6 +29,11 @@
 			{
 				"transform": "rbxts-transformer-flamework"
 			}
-		]
+		],
+		"paths": {
+			"@flamework": [
+				"./node_modules/@flamework"
+			]
+		}
 	}
 }

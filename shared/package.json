@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/adamraichu__local_rbx-swa-common",
-  "version": "0.0.77",
+  "version": "0.0.133",
   "main": "out/init.lua",
   "scripts": {
     "build": "npm version patch && rbxtsc --type package",
@@ -14,6 +14,7 @@
   "types": "out/index.d.ts",
   "files": [
     "out",
+    "flamework.build",
     "!**/*.tsbuildinfo"
   ],
   "publishConfig": {

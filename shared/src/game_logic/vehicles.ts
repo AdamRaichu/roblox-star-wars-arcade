@@ -1,5 +1,5 @@
 export function playerCanMount(player: Player, vehicle: RideableModel): [true] | [false, string] {
-	const config = vehicle.CONFIG;
+	const config = vehicle.VehicleConfig;
 
 	if (hasRider(vehicle)) {
 		// TODO: When adding NPC control, make sure this logic still works.

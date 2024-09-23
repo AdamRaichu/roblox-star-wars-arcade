@@ -1,57 +1,88 @@
-import { Flamework } from "@flamework/core";
 import * as logic from "./game_logic";
 
-export * as teams from "./teams";
+export * as components from "./flamework/server/components";
+export * as utils from "./flamework/utils";
+export * as teams from "./flamework/server/teams";
+export * as client from "./flamework/client";
+export { sendSystemMessageTo } from "./flamework/server/system_chat";
 export { logic };
 
 declare global {
-	export interface GameStatus {
-		bases: logic.Base[][];
-	}
+  export interface GameStatus {
+    bases: logic.Base[][];
+  }
 
-	export interface GameSettings {
-		gameType: GameType;
-		prebuiltBuildings: [Vector2, logic.DestructibleBuilding][];
-		availableBuildings: ForBothTeams<logic.DestructibleBuilding[][]>;
-		initialFunds: ForBothTeams<number>;
-	}
+  export interface GameSettings {
+    gameType: GameType;
+    prebuiltBuildings: [Vector2, DestructibleBuilding][];
+    availableBuildings: ForBothTeams<DestructibleBuilding[][]>;
+    initialFunds: ForBothTeams<number>;
+  }
 
-	enum GameType {
-		CommandCenter,
-	}
+  enum GameType {
+    CommandCenter,
+  }
 
-	export interface RideableModel extends ModelWithHealth {
-		VehicleSeat: VehicleSeat;
-		Base: Part;
-		Engine: Part;
-		CONFIG: VehicleConfigData;
-		DismountLocation: Part;
-	}
+  export interface DestructibleBuilding extends ModelWithHealth {
+    /**
+     * An attachment used to determine where a building should be placed.
+     */
+    AnchorToBase: PartWithAttachment;
+  }
 
-	interface VehicleConfigData extends Folder {
-		ControllingTeam: StringValue;
-		CanBeHijacked: BoolValue;
-	}
+  export interface BaseModel extends Model {
+    Center: Model;
+    Outline: UnionOperation;
+    Shield: Part;
+    BuildingLocations: Folder & {
+      East: PartWithAttachment;
+      // TODO: Add the rest.
+    };
+  }
 
-	/**
-	 * See `WithHealthComponent`
-	 */
-	interface ModelWithHealth extends Model {
-		HealthConfig: HealthConfigData;
-	}
+  interface PartWithAttachment extends Part {
+    Attachment: Attachment;
+  }
 
-	interface HealthConfigData extends Folder {
-		Hitbox: Part;
+  export interface RideableModel extends ModelWithHealth {
+    VehicleSeat: VehicleSeat;
+    Base: Part;
+    Engine: Part;
+    VehicleConfig: VehicleConfigData;
+    DismountLocation: Part;
+  }
 
-		CurrentHealth: IntValue;
-		// Intended to be static.
-		MaxHealth: IntValue;
-		HealthRegenAmount: IntValue;
-		HealthRegenInterval: NumberValue;
-	}
+  interface RideableModel_AfterServerInit extends RideableModel {
+    FireEvent: RemoteEvent;
+    VehicleSeat: VehicleSeat & {
+      MountDismountPrompt: ProximityPrompt;
+    };
+  }
 
-	interface ForBothTeams<T> {
-		Republic: T;
-		Separatist: T;
-	}
+  interface VehicleConfigData extends Folder {
+    ControllingTeam: StringValue;
+    CanBeHijacked: BoolValue;
+  }
+
+  /**
+   * See `WithHealthComponent`
+   */
+  interface ModelWithHealth extends Model {
+    HealthConfig: HealthConfigData;
+  }
+
+  interface HealthConfigData extends Folder {
+    Hitbox: Part;
+
+    CurrentHealth: IntValue;
+    // Intended to be static.
+    MaxHealth: IntValue;
+    HealthRegenAmount: IntValue;
+    HealthRegenInterval: NumberValue;
+  }
+
+  interface ForBothTeams<T> {
+    Republic: T;
+    Separatist: T;
+  }
 }

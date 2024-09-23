@@ -1,7 +1,9 @@
 cd ../shared
-npm run build
+npm run build --silent
 
 cd ../geonosis
-npm run build
+npm uninstall ../shared --no-save --silent
 
-rojo serve
+npm i --install-links
+
+rojo serve & npm run watch
