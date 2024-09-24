@@ -1,6 +1,6 @@
 import { Components as _Components } from "@flamework/components";
 import { Dependency, Flamework } from "@flamework/core";
-import { components, sendSystemMessageTo, teams, utils } from "@rbxts/adamraichu__local_rbx-swa-common";
+import { components, logic, sendSystemMessageTo, teams, utils } from "@rbxts/adamraichu__local_rbx-swa-common";
 
 const ServerStorage = game.GetService("ServerStorage");
 const Players = game.GetService("Players");
@@ -30,7 +30,6 @@ buildCommandCenterAt(utils.Direction.SW);
 buildCommandCenterAt(utils.Direction.W);
 buildCommandCenterAt(utils.Direction.NW);
 
-/*
 Players.PlayerAdded.Connect((player) => {
   player.CharacterAdded.Connect((character) => {
     new Promise((resolve, reject) => {
@@ -42,15 +41,15 @@ Players.PlayerAdded.Connect((player) => {
 
       // eslint-disable-next-line no-constant-condition
       while (true) {
-        wait(1);
+        wait(5);
         const look = character.PrimaryPart?.CFrame.LookVector;
-        // FIXME: logic.fireBullet is completely broken right now, and I don't know why. Troubleshoot later.
-        logic.fireBullet(character.PrimaryPart.Position, look.mul(10), 1, teams.getGoodTeam());
+        logic.fireBullet(character.PrimaryPart.Position, look, 5, teams.getGoodTeam());
       }
     });
   });
 });
- */
 
 task.wait(5);
 sendSystemMessageTo("Hello, world!", "ALL");
+
+// ServerStorage.Vehicles.MTT.Clone().Parent = game.Workspace;

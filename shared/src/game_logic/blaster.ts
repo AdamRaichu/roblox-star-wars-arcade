@@ -9,28 +9,28 @@ export function fireBullet(originPoint: Vector3, angle: Vector3, maxDistance: nu
     const bullet = new Instance("Part");
     bullet.Position = originPoint;
     // // FIXME: Make `Game.goodGuys` public.
-    // bullet.CollisionGroup =
-    // 	(player.Team?.Name === Game.goodGuys.Name ? collisionGroups[0] : collisionGroups[1]) ??
-    // 	Physics.GetRegisteredCollisionGroups()[0].name;
-    bullet.Size = new Vector3(1, 1, 1);
+    bullet.Size = new Vector3(2, 0.3, 0.3);
     bullet.Material = Enum.Material.Neon;
     bullet.Color = teamOwner.TeamColor.Color;
-    bullet.Anchored = false;
+    bullet.CanCollide = false;
+    // FIXME: Rotation is not working as expected.
+    print(angle);
+    bullet.Rotation = angle; //.add(new Vector3(0, 90, 0));
+    print(bullet.Rotation);
+    bullet.Anchored = true;
 
     bullet.Parent = game.Workspace;
 
     const hitDetector = bullet.Touched.Connect((part) => {
       if (part.Name === "Terrain") {
+        hitDetector.Disconnect();
         return;
       }
-      print("Touched part");
-      print(part);
 
       // TODO: damage target
     });
 
-    const targetPoint = getPointFromDistance(angle, maxDistance);
-    print(targetPoint);
+    const targetPoint = getPointFromDistance(originPoint, angle, maxDistance);
     const duration = maxDistance / BULLET_SPEED;
     const tweenOptions = new TweenInfo(duration, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 1, false, 0);
     const tween = TweenService.Create(bullet, tweenOptions, { Position: targetPoint });
