@@ -9,7 +9,6 @@ const TeamService = game.GetService("Teams");
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export class GroundBattleBaseComponent extends BaseComponent<{}, BaseModel> {
   private shieldActive = false;
-  private centerIsRayShielded = false;
   private controllingTeam: Team = getNeutralTeam();
 
   public getTeam(): Team {

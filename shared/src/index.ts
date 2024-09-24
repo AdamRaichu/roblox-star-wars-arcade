@@ -35,8 +35,14 @@ declare global {
     Outline: UnionOperation;
     Shield: Part;
     BuildingLocations: Folder & {
+      North: PartWithAttachment;
+      NorthEast: PartWithAttachment;
       East: PartWithAttachment;
-      // TODO: Add the rest.
+      SouthEast: PartWithAttachment;
+      South: PartWithAttachment;
+      SouthWest: PartWithAttachment;
+      West: PartWithAttachment;
+      NorthWest: PartWithAttachment;
     };
   }
 

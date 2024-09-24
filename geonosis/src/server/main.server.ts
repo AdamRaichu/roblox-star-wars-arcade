@@ -10,17 +10,25 @@ teams.createTeams();
 Flamework.addPaths("node_modules/@rbxts/adamraichu__local_rbx-swa-common/out/flamework/server/components");
 Flamework.ignite();
 
-print(components);
-
 const Components = Dependency<_Components>();
 
 print("Flamework started");
 
-const commandCenter = ServerStorage.Buildings["Forward Command Center"].Clone();
-commandCenter.Parent = game.Workspace;
-Components.waitForComponent<components.BuildingComponent>(commandCenter).then((component) => {
-  component.attachToBase(game.Workspace.Bases.Base, utils.Direction.E);
-});
+async function buildCommandCenterAt(direction: utils.Direction) {
+  const commandCenter = ServerStorage.Buildings["Forward Command Center"].Clone();
+  commandCenter.Parent = game.Workspace;
+  const component = await Components.waitForComponent<components.BuildingComponent>(commandCenter);
+  component.attachToBase(game.Workspace.Bases.Base, direction);
+}
+
+buildCommandCenterAt(utils.Direction.N);
+buildCommandCenterAt(utils.Direction.NE);
+buildCommandCenterAt(utils.Direction.E);
+buildCommandCenterAt(utils.Direction.SE);
+buildCommandCenterAt(utils.Direction.S);
+buildCommandCenterAt(utils.Direction.SW);
+buildCommandCenterAt(utils.Direction.W);
+buildCommandCenterAt(utils.Direction.NW);
 
 /*
 Players.PlayerAdded.Connect((player) => {
