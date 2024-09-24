@@ -1,12 +1,15 @@
 import { Component } from "@flamework/components";
 import { WithHealthComponent } from "./WithHealthComponent";
 import { Direction } from "../../utils";
+import { sendSystemMessageTo } from "../system_chat";
 
 @Component({ tag: "building-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export class BuildingComponent extends WithHealthComponent<{}, DestructibleBuilding> {
   deathAnimation(): void {
-    error("Unimplemented method deathAnimation");
+    // TODO: Implement death animation
+    sendSystemMessageTo(`${this.instance.GetFullName()} has been destroyed!`, "ALL");
+    this.instance.Destroy();
   }
 
   public attachToBase(base: BaseModel, pos: Direction) {

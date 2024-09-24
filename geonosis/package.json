@@ -5,7 +5,8 @@
   "scripts": {
     "build": "rbxtsc",
     "watch": "rbxtsc -w",
-    "refresh": "bash scripts/refresh.sh"
+    "refresh": "bash scripts/refresh.sh",
+    "clean": "bash scripts/clean.sh"
   },
   "keywords": [],
   "author": "",
