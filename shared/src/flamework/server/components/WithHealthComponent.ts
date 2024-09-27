@@ -38,6 +38,10 @@ export abstract class WithHealthComponent<A extends {}, I extends ModelWithHealt
     });
   }
 
+  public isLiving() {
+    return this.alive;
+  }
+
   public damage(amount: number): void {
     if (typeIs(this.healthConfig, "nil")) {
       return;

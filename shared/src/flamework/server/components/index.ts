@@ -3,4 +3,4 @@ import { GroundBattleBaseComponent } from "./GroundBattleBaseComponent";
 import { VehicleComponent } from "./VehicleComponent";
 import { WithHealthComponent } from "./WithHealthComponent";
 
-export { GroundBattleBaseComponent, WithHealthComponent, BuildingComponent, VehicleComponent };
+export { BuildingComponent, GroundBattleBaseComponent, VehicleComponent, WithHealthComponent };

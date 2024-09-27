@@ -87,8 +87,18 @@ declare global {
     HealthRegenInterval: NumberValue;
   }
 
+  interface BuildMenuCategory {
+    // icon: Instance
+    options: BuildMenuOptionData[];
+  }
+
+  interface BuildMenuOptionData {
+    price: number;
+    model: DestructibleBuilding;
+  }
+
   interface ForBothTeams<T> {
     Republic: T;
-    Separatist: T;
+    Separatists: T;
   }
 }
