@@ -38,6 +38,7 @@
     "@flamework/components": "^1.2.3",
     "@flamework/core": "^1.2.3",
     "@flamework/networking": "^1.2.3",
-    "@rbxts/rbx-gui-library": "^0.2.8"
+    "@rbxts/rbx-gui-library": "^0.2.8",
+    "@rbxts/shared-components-flamework": "^2.3.5"
   }
 }

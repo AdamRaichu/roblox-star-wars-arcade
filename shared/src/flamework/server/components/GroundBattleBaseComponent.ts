@@ -22,6 +22,7 @@ export class GroundBattleBaseComponent extends BaseComponent<GroundBattleBaseAtt
     super();
 
     this.buildingTracker.registerBase(this);
+    // TODO: Register on client side as well (for map)
   }
 
   // METADATA RETRIEVAL
