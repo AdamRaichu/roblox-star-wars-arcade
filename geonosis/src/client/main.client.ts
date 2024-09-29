@@ -1,5 +1,9 @@
 import { RadialMenu } from "@rbxts/rbx-gui-library";
 import { client } from "@rbxts/adamraichu__local_rbx-swa-common";
+import { Flamework } from "@flamework/core";
+
+Flamework.addPaths("node_modules/@rbxts/adamraichu__local_rbx-swa-common/out/flamework/client/controllers");
+Flamework.ignite();
 
 const Players = game.GetService("Players");
 const gui = Players.LocalPlayer.WaitForChild("PlayerGui");

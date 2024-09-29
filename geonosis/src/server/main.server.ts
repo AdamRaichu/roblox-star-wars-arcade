@@ -8,6 +8,7 @@ const Players = game.GetService("Players");
 teams.createTeams();
 
 Flamework.addPaths("node_modules/@rbxts/adamraichu__local_rbx-swa-common/out/flamework/server/components");
+Flamework.addPaths("node_modules/@rbxts/adamraichu__local_rbx-swa-common/out/flamework/server/services");
 Flamework.ignite();
 
 const Components = Dependency<_Components>();

@@ -1,14 +1,28 @@
 import { Controller } from "@flamework/core";
-import { MINIMAP_CONTROLLER_COMMANDS as MINIMAP_CONTROLLER_COMMAND } from "../../../constants";
+import { MINIMAP_CONTROLLER_COMMANDS } from "../../../constants";
 
 const fw = script.Parent?.Parent?.Parent as LocalFlameworkFolder;
 
+const StarterGui = game.GetService("StarterGui");
+const Players = game.GetService("Players");
+
 @Controller()
-export class MinimapController {
+export class MinimapRenderer {
   constructor() {
+    print("MinimapRenderer initialized.");
+
     fw.events.MinimapDataChannel.OnClientEvent.Connect((...args) => {
       this.dataHandler(args);
     });
+
+    const gui = this.getBaseGui();
+    gui.Parent = Players.LocalPlayer.WaitForChild("PlayerGui");
+  }
+
+  private getBaseGui(): ScreenGui {
+    const baseGui = new Instance("ScreenGui");
+    baseGui.Name = "MinimapGui";
+    return baseGui;
   }
 
   private dataHandler(..._args: unknown[]) {
@@ -30,7 +44,7 @@ export class MinimapController {
     const command: string = _command as string;
 
     switch (command) {
-      case MINIMAP_CONTROLLER_COMMAND.BaseTeamChange:
+      case MINIMAP_CONTROLLER_COMMANDS.BaseTeamChange:
         // Update map
         break;
 
