@@ -43,8 +43,8 @@ Players.PlayerAdded.Connect((player) => {
       // eslint-disable-next-line no-constant-condition
       while (true) {
         wait(5);
-        const look = character.PrimaryPart?.CFrame.LookVector;
-        logic.fireBullet(character.PrimaryPart.Position, look, 5, teams.getGoodTeam());
+        const look = character.PrimaryPart!.CFrame.LookVector;
+        logic.fireBullet(character.PrimaryPart, look, 50, teams.getGoodTeam());
       }
     });
   });

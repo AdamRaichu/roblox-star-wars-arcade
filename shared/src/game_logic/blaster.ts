@@ -4,8 +4,10 @@ import { getPointFromDistance } from "../utils";
 const CollectionService = game.GetService("CollectionService");
 const TweenService = game.GetService("TweenService");
 
-export function fireBullet(originPoint: Vector3, angle: Vector3, maxDistance: number, teamOwner: Team): Promise<void> {
+export function fireBullet(origin: BasePart, angle: Vector3, maxDistance: number, teamOwner: Team): Promise<void> {
   return new Promise((resolve, reject) => {
+    const originPoint = origin.Position;
+
     const bullet = new Instance("Part");
     bullet.Position = originPoint;
     // // FIXME: Make `Game.goodGuys` public.
@@ -14,9 +16,8 @@ export function fireBullet(originPoint: Vector3, angle: Vector3, maxDistance: nu
     bullet.Color = teamOwner.TeamColor.Color;
     bullet.CanCollide = false;
     // FIXME: Rotation is not working as expected.
-    print(angle);
-    bullet.Rotation = angle; //.add(new Vector3(0, 90, 0));
-    print(bullet.Rotation);
+    const orientation = new Vector3(...origin.CFrame.ToEulerAnglesXYZ()).mul(180 / math.pi).add(new Vector3(0, 90, 0));
+    bullet.Rotation = orientation; //.add(new Vector3(0, 90, 0));
     bullet.Anchored = true;
 
     bullet.Parent = game.Workspace;

@@ -5,7 +5,7 @@
  * new TweenInfo(maxDistance / BULLET_SPEED, [...])
  * ```
  */
-export const BULLET_SPEED = 2;
+export const BULLET_SPEED = 32;
 /**
  * The value to set the `Transparency` property of the Shield part when it is visible/enabled.
  */
