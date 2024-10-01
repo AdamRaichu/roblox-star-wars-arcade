@@ -1,6 +1,6 @@
 import { Game } from "./game";
 import { Base } from "./base";
-import { fireBullet } from "./blaster";
+import { fireBullet } from "../flamework/blaster";
 
 export * as prompts from "./prompts";
 export * as vehicles from "./vehicles";

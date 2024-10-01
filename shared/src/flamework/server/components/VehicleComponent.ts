@@ -6,7 +6,7 @@ const Players = game.GetService("Players");
 
 @Component({ tag: "vehicle-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export abstract class VehicleComponent extends WithHealthComponent<HealthAttributes, RideableModel> {
+export abstract class VehicleComponent extends WithHealthComponent<RideableModel> {
   protected abstract fireDelay: number;
   protected canFire = true;
 

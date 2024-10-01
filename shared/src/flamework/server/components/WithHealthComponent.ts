@@ -2,10 +2,10 @@ import { BaseComponent, Component } from "@flamework/components";
 
 @Component({ tag: "with-health" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export abstract class WithHealthComponent<A extends HealthAttributes, I extends ModelWithHitbox> extends BaseComponent<
-  A,
-  I
-> {
+export abstract class WithHealthComponent<
+  I extends ModelWithHitbox = ModelWithHitbox,
+  A extends HealthAttributes = HealthAttributes,
+> extends BaseComponent<A, I> {
   protected alive: boolean = false;
   private _onDeath: BindableEvent = new Instance("BindableEvent");
   /**
