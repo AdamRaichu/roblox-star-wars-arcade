@@ -10,14 +10,12 @@ export function fireBullet(origin: BasePart, angle: Vector3, maxDistance: number
 
     const bullet = new Instance("Part");
     bullet.Position = originPoint;
-    // // FIXME: Make `Game.goodGuys` public.
     bullet.Size = new Vector3(2, 0.3, 0.3);
     bullet.Material = Enum.Material.Neon;
     bullet.Color = teamOwner.TeamColor.Color;
     bullet.CanCollide = false;
-    // FIXME: Rotation is not working as expected.
     const orientation = new Vector3(...origin.CFrame.ToEulerAnglesXYZ()).mul(180 / math.pi).add(new Vector3(0, 90, 0));
-    bullet.Rotation = orientation; //.add(new Vector3(0, 90, 0));
+    bullet.Rotation = orientation;
     bullet.Anchored = true;
 
     bullet.Parent = game.Workspace;
@@ -39,7 +37,6 @@ export function fireBullet(origin: BasePart, angle: Vector3, maxDistance: number
     task.wait(duration);
     bullet.Destroy();
     hitDetector.Disconnect();
-    print("Bullet destroyed");
     resolve();
   });
 }
