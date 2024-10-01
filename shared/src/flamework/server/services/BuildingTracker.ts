@@ -11,7 +11,9 @@ export class BuildingTracker {
     Separatists: [],
   };
 
-  constructor() {}
+  constructor() {
+    print("BuildingTracker initialized");
+  }
 
   // SETUP
 

@@ -2,9 +2,11 @@ import { BaseComponent, Component } from "@flamework/components";
 
 @Component({ tag: "with-health" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export abstract class WithHealthComponent<A extends {}, I extends ModelWithHealth> extends BaseComponent<A, I> {
+export abstract class WithHealthComponent<A extends HealthAttributes, I extends ModelWithHitbox> extends BaseComponent<
+  A,
+  I
+> {
   protected alive: boolean = false;
-  protected healthConfig?: HealthConfigData;
   private _onDeath: BindableEvent = new Instance("BindableEvent");
   /**
    * Recommend only using `.Once()`.
@@ -14,21 +16,15 @@ export abstract class WithHealthComponent<A extends {}, I extends ModelWithHealt
   constructor() {
     super();
 
-    this.healthConfig = this.instance.HealthConfig;
-
     // Health regen.
     new Promise<void>((resolve, reject) => {
-      if (typeIs(this.healthConfig, "nil")) {
-        reject(`config values was undefined for component ${this.instance.GetFullName()}`);
-        return;
-      }
-      const maxHealth = this.healthConfig.MaxHealth.Value;
+      const maxHealth = this.attributes.MaxHealth;
       while (this.alive) {
-        task.wait(this.healthConfig.HealthRegenInterval.Value);
-        const currentHealth = this.healthConfig.CurrentHealth.Value;
-        let newHealth = currentHealth + this.healthConfig.HealthRegenAmount.Value;
+        task.wait(this.attributes.HealthRegenInterval);
+        const currentHealth = this.attributes.CurrentHealth;
+        let newHealth = currentHealth + this.attributes.HealthRegenAmount;
         newHealth = math.min(newHealth, maxHealth);
-        this.healthConfig.CurrentHealth.Value = newHealth;
+        this.attributes.CurrentHealth = newHealth;
       }
       resolve();
     });
@@ -43,13 +39,9 @@ export abstract class WithHealthComponent<A extends {}, I extends ModelWithHealt
   }
 
   public damage(amount: number): void {
-    if (typeIs(this.healthConfig, "nil")) {
-      return;
-    }
-
-    const currentHealth = this.healthConfig.CurrentHealth.Value;
+    const currentHealth = this.attributes.CurrentHealth;
     const newHealth = math.max(currentHealth - amount, 0);
-    this.healthConfig.CurrentHealth.Value = newHealth;
+    this.attributes.CurrentHealth = newHealth;
     if (newHealth <= 0) {
       this.alive = false;
       this._onDeath.Fire();

@@ -6,6 +6,8 @@ export class BankingService {
   funds: ForBothTeams<number>;
 
   constructor() {
+    print("BankingService initialized");
+
     this.funds = {
       Republic: 0,
       Separatists: 0,

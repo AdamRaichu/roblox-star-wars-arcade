@@ -9,7 +9,7 @@ const Players = game.GetService("Players");
 @Controller()
 export class MinimapRenderer {
   constructor() {
-    print("MinimapRenderer initialized.");
+    print("MinimapRenderer initialized");
 
     fw.events.MinimapDataChannel.OnClientEvent.Connect((...args) => {
       this.dataHandler(args);

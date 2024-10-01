@@ -14,3 +14,17 @@ export const SHIELD_VISIBLE_TRANSPARENCY = -8;
 export enum MINIMAP_CONTROLLER_COMMANDS {
   BaseTeamChange = "base-team-change",
 }
+
+export enum MINIMAP_ICON_IDS {
+  Triangle,
+  Square,
+  BaseCircle,
+  RayBeam,
+}
+
+export enum BUILD_MENU_ICON_IDS {
+  GroundCannon,
+  AirSupport,
+  Barracks,
+  // etc.
+}

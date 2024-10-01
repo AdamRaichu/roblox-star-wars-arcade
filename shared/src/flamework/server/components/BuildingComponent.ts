@@ -5,7 +5,7 @@ import { sendSystemMessageTo } from "../system_chat";
 
 @Component({ tag: "building-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export class BuildingComponent extends WithHealthComponent<{}, DestructibleBuilding> {
+export class BuildingComponent extends WithHealthComponent<HealthAttributes, DestructibleBuilding> {
   deathAnimation(): void {
     // TODO: Implement death animation
     sendSystemMessageTo(`${this.instance.GetFullName()} has been destroyed!`, "ALL");

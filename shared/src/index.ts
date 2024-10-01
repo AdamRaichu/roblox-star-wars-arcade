@@ -1,3 +1,4 @@
+import { BUILD_MENU_ICON_IDS } from "./constants";
 import * as logic from "./game_logic";
 
 export * as components from "./flamework/server/components";
@@ -23,7 +24,7 @@ declare global {
     CommandCenter,
   }
 
-  export interface DestructibleBuilding extends ModelWithHealth {
+  export interface DestructibleBuilding extends ModelWithHitbox {
     /**
      * An attachment used to determine where a building should be placed.
      */
@@ -50,7 +51,7 @@ declare global {
     Attachment: Attachment;
   }
 
-  export interface RideableModel extends ModelWithHealth {
+  export interface RideableModel extends ModelWithHitbox {
     VehicleSeat: VehicleSeat;
     Base: Part;
     Engine: Part;
@@ -70,13 +71,22 @@ declare global {
     CanBeHijacked: BoolValue;
   }
 
+  interface MinimapTrackedModel extends ModelWithHitbox {
+    Hitbox: Part & {
+      MinimapPositionBeacon: Attachment;
+    };
+  }
+
   /**
    * See `WithHealthComponent`
    */
-  interface ModelWithHealth extends Model {
-    HealthConfig: HealthConfigData;
+  interface ModelWithHitbox extends Model {
+    Hitbox: Part;
   }
 
+  /**
+   * @deprecated Being replaced by attributes.
+   */
   interface HealthConfigData extends Folder {
     Hitbox: Part;
 
@@ -87,12 +97,20 @@ declare global {
     HealthRegenInterval: NumberValue;
   }
 
+  interface HealthAttributes {
+    CurrentHealth: number;
+    MaxHealth: number;
+    HealthRegenAmount: number;
+    HealthRegenInterval: number;
+  }
+
   interface BuildMenuCategory {
-    // icon: Instance
+    iconId: BUILD_MENU_ICON_IDS;
     options: BuildMenuOptionData[];
   }
 
   interface BuildMenuOptionData {
+    iconId: BUILD_MENU_ICON_IDS;
     price: number;
     model: DestructibleBuilding;
   }
