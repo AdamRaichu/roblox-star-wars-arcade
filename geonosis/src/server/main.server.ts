@@ -22,14 +22,14 @@ async function buildCommandCenterAt(direction: utils.Direction) {
   component.attachToBase(game.Workspace.Bases.Base, direction);
 }
 
-buildCommandCenterAt(utils.Direction.N);
-buildCommandCenterAt(utils.Direction.NE);
+// buildCommandCenterAt(utils.Direction.N);
+// buildCommandCenterAt(utils.Direction.NE);
 buildCommandCenterAt(utils.Direction.E);
-buildCommandCenterAt(utils.Direction.SE);
-buildCommandCenterAt(utils.Direction.S);
-buildCommandCenterAt(utils.Direction.SW);
-buildCommandCenterAt(utils.Direction.W);
-buildCommandCenterAt(utils.Direction.NW);
+// buildCommandCenterAt(utils.Direction.SE);
+// buildCommandCenterAt(utils.Direction.S);
+// buildCommandCenterAt(utils.Direction.SW);
+// buildCommandCenterAt(utils.Direction.W);
+// buildCommandCenterAt(utils.Direction.NW);
 
 Players.PlayerAdded.Connect((player) => {
   player.CharacterAdded.Connect((character) => {

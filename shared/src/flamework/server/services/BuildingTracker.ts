@@ -15,7 +15,7 @@ export class BuildingTracker {
     print("BuildingTracker initialized");
   }
 
-  // SETUP
+  //#region SETUP
 
   public registerBase(base: GroundBattleBaseComponent) {
     const pos = base.attributes.mapPosition;
@@ -36,7 +36,8 @@ export class BuildingTracker {
     this.availableBuildings = config;
   }
 
-  // METADATA RETRIEVAL
+  //#endregion SETUP
+  //#region METADATA RETRIEVAL
 
   /**
    * Used to get the theoretical buildings that a player could build. Checks for base count and number of buildings at base. Does NOT check for available studs. Use `canBuild` instead for that.
@@ -81,4 +82,10 @@ export class BuildingTracker {
     });
     return count;
   }
+
+  getBases() {
+    return this.bases;
+  }
+
+  //#endregion METADATA RETRIEVAL
 }

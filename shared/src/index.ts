@@ -24,7 +24,7 @@ declare global {
     CommandCenter,
   }
 
-  export interface DestructibleBuilding extends ModelWithHitbox {
+  export interface DestructibleBuilding extends MinimapTrackedModel {
     /**
      * An attachment used to determine where a building should be placed.
      */
@@ -35,6 +35,7 @@ declare global {
     Center: Model;
     Outline: UnionOperation;
     Shield: Part;
+    BuildingsContainer: Folder;
     BuildingLocations: Folder & {
       North: PartWithAttachment;
       NorthEast: PartWithAttachment;

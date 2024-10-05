@@ -1,7 +1,7 @@
 import { BaseComponent, Component } from "@flamework/components";
 import { SHIELD_VISIBLE_TRANSPARENCY } from "../../../constants";
 import { Direction } from "../../utils";
-import { BuildingTracker } from "../services/BuildingTracker";
+import { BuildingTracker } from "../services";
 import { getNeutralTeam } from "../teams";
 import { BuildingComponent } from "./BuildingComponent";
 
@@ -14,6 +14,8 @@ interface GroundBattleBaseAttributes {
 @Component({ tag: "base-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export class GroundBattleBaseComponent extends BaseComponent<GroundBattleBaseAttributes, BaseModel> {
+  private _onChange = new Instance("BindableEvent");
+  public onChange = this._onChange.Event;
   private shieldActive = false;
   private controllingTeam: Team = getNeutralTeam();
   private buildings: BuildingComponent[] = [];
@@ -68,5 +70,7 @@ export class GroundBattleBaseComponent extends BaseComponent<GroundBattleBaseAtt
     shield.CanCollide = false;
   }
 
-  public build(building: DestructibleBuilding, direction: Direction): void {}
+  public build(building: DestructibleBuilding, direction: Direction): void {
+    // TODO: Trigger onChange on build and on building death.
+  }
 }
