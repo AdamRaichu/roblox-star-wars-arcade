@@ -1,43 +1,40 @@
-import { BULLET_SPEED } from "../constants";
-import { getPointFromDistance } from "../utils";
+import { Components as _Components } from "@flamework/components";
+import { Dependency } from "@flamework/core";
+import { BASIC_BULLET_DAMAGE, HITBOX_TAG } from "../constants";
+import { getPointFromDistance, raycastBetweenPoints } from "../utils";
+import { BuildingComponent, WithHealthComponent } from "./server/components";
 
 const CollectionService = game.GetService("CollectionService");
 const TweenService = game.GetService("TweenService");
 
-export function fireBullet(origin: BasePart, angle: Vector3, maxDistance: number, teamOwner: Team): Promise<void> {
+export async function fireBullet(
+  origin: BasePart,
+  angle: Vector3,
+  maxDistance: number,
+  teamOwner: Team,
+): Promise<void> {
+  const Components = Dependency<_Components>();
+
   return new Promise((resolve, reject) => {
     const originPoint = origin.Position;
+    const targetPoint = getPointFromDistance(originPoint, angle, maxDistance);
 
-    const bullet = new Instance("Part");
-    bullet.Position = originPoint;
-    bullet.Size = new Vector3(2, 0.3, 0.3);
-    bullet.Material = Enum.Material.Neon;
-    bullet.Color = teamOwner.TeamColor.Color;
-    bullet.CanCollide = false;
-    const orientation = new Vector3(...origin.CFrame.ToEulerAnglesXYZ()).mul(180 / math.pi).add(new Vector3(0, 90, 0));
-    bullet.Rotation = orientation;
-    bullet.Anchored = true;
+    const params = new RaycastParams();
 
-    bullet.Parent = game.Workspace;
-
-    const hitDetector = bullet.Touched.Connect((part) => {
-      if (part.Name === "Terrain") {
-        hitDetector.Disconnect();
+    raycastBetweenPoints(originPoint, targetPoint, params).then(async (result) => {
+      if (!result) {
+        resolve();
         return;
       }
 
-      // TODO: damage target
-    });
+      const hit = result.Instance;
 
-    const targetPoint = getPointFromDistance(originPoint, angle, maxDistance);
-    const duration = maxDistance / BULLET_SPEED;
-    const tweenOptions = new TweenInfo(duration, Enum.EasingStyle.Linear, Enum.EasingDirection.In, 1, false, 0);
-    const tween = TweenService.Create(bullet, tweenOptions, { Position: targetPoint });
-    tween.Play();
-    task.wait(duration);
-    bullet.Destroy();
-    hitDetector.Disconnect();
-    resolve();
+      if (hit.HasTag(HITBOX_TAG)) {
+        const healthy = WithHealthComponent.getSubComponent(hit.Parent! as ModelWithHitbox);
+        healthy.damage(BASIC_BULLET_DAMAGE);
+      }
+      resolve();
+    });
   });
 }
 

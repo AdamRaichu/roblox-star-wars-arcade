@@ -35,15 +35,15 @@ Players.PlayerAdded.Connect((player) => {
   player.CharacterAdded.Connect((character) => {
     new Promise((resolve, reject) => {
       print("Character added");
-      while (!character.PrimaryPart) {
-        print("Waiting for character to be ready");
-        wait(1);
+
+      if (!character.PrimaryPart) {
+        return;
       }
 
       // eslint-disable-next-line no-constant-condition
       while (true) {
-        wait(5);
-        const look = character.PrimaryPart!.CFrame.LookVector;
+        wait(1);
+        const look = character.PrimaryPart.CFrame.LookVector;
         logic.fireBullet(character.PrimaryPart, look, 50, teams.getGoodTeam());
       }
     });

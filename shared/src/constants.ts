@@ -4,12 +4,17 @@
  * ```ts
  * new TweenInfo(maxDistance / BULLET_SPEED, [...])
  * ```
+ *
+ * @deprecated
  */
 export const BULLET_SPEED = 32;
+export const BASIC_BULLET_DAMAGE = 1;
 /**
  * The value to set the `Transparency` property of the Shield part when it is visible/enabled.
  */
 export const SHIELD_VISIBLE_TRANSPARENCY = -8;
+
+export const HITBOX_TAG = "with-health-hitbox";
 
 export enum MINIMAP_CONTROLLER_COMMANDS {
   BaseTeamChange = "base-team-change",
