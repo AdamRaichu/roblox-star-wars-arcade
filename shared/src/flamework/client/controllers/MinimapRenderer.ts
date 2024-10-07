@@ -5,7 +5,9 @@ const fw = script.Parent?.Parent?.Parent as LocalFlameworkFolder;
 
 const StarterGui = game.GetService("StarterGui");
 const Players = game.GetService("Players");
-
+/**
+ * @client
+ */
 @Controller()
 export class MinimapRenderer {
   constructor() {

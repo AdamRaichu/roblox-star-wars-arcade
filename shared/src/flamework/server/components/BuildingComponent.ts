@@ -1,11 +1,19 @@
 import { Component } from "@flamework/components";
-import { WithHealthComponent } from "./WithHealthComponent";
+import { MINIMAP_ICON_IDS } from "../../../constants";
 import { Direction } from "../../utils";
+import { MinimapTracker } from "../services";
 import { sendSystemMessageTo } from "../system_chat";
+import { WithHealthComponent } from "./WithHealthComponent";
 
 @Component({ tag: "building-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export class BuildingComponent extends WithHealthComponent<DestructibleBuilding> {
+  constructor(private readonly minimapTracker: MinimapTracker) {
+    super();
+
+    this.minimapTracker.registerComponent(this, MINIMAP_ICON_IDS.Square, Color3.fromRGB(255, 255, 255));
+  }
+
   deathAnimation(): void {
     // TODO: Implement death animation
     sendSystemMessageTo(`${this.instance.GetFullName()} has been destroyed!`, "ALL");

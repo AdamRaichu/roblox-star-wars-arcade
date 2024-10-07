@@ -2,6 +2,8 @@ import { BaseComponent, Component, Components as _Components } from "@flamework/
 import { Dependency } from "@flamework/core";
 import { BuildingComponent } from "./BuildingComponent";
 
+const RunService = game.GetService("RunService");
+
 @Component({ tag: "with-health" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export abstract class WithHealthComponent<
@@ -27,6 +29,10 @@ export abstract class WithHealthComponent<
 
   constructor() {
     super();
+
+    if (RunService.IsClient()) {
+      error("Tried to construct BuildingComponent on client.", 2);
+    }
 
     // Health regen.
     new Promise<void>((resolve, reject) => {
