@@ -1,14 +1,11 @@
 import { Components as _Components } from "@flamework/components";
 import { Dependency, Flamework } from "@flamework/core";
-import { components, logic, sendSystemMessageTo, teams, utils } from "@rbxts/adamraichu__local_rbx-swa-common/out/old";
+import { chat, components, fireBullet, teams } from "@rbxts/adamraichu__local_rbx-swa-common/out/flamework/server";
+import { Direction } from "@rbxts/adamraichu__local_rbx-swa-common/out/flamework/utils";
 
 const ServerStorage = game.GetService("ServerStorage");
 const Players = game.GetService("Players");
 const RunService = game.GetService("RunService");
-
-if (RunService.IsClient()) {
-  error("This script is meant to be run on the server");
-}
 
 teams.createTeams();
 
@@ -20,7 +17,7 @@ const Components = Dependency<_Components>();
 
 print("Flamework started");
 
-async function buildCommandCenterAt(direction: utils.Direction) {
+async function buildCommandCenterAt(direction: Direction) {
   const commandCenter = ServerStorage.Buildings["Forward Command Center"].Clone();
   commandCenter.Parent = game.Workspace;
   const component = await Components.waitForComponent<components.BuildingComponent>(commandCenter);
@@ -29,7 +26,7 @@ async function buildCommandCenterAt(direction: utils.Direction) {
 
 // buildCommandCenterAt(utils.Direction.N);
 // buildCommandCenterAt(utils.Direction.NE);
-buildCommandCenterAt(utils.Direction.E);
+buildCommandCenterAt(Direction.E);
 // buildCommandCenterAt(utils.Direction.SE);
 // buildCommandCenterAt(utils.Direction.S);
 // buildCommandCenterAt(utils.Direction.SW);
@@ -49,13 +46,13 @@ Players.PlayerAdded.Connect((player) => {
       while (true) {
         wait(1);
         const look = character.PrimaryPart.CFrame.LookVector;
-        logic.fireBullet(character.PrimaryPart, look, 50, teams.getGoodTeam());
+        fireBullet(character.PrimaryPart, look, 50, teams.getGoodTeam());
       }
     });
   });
 });
 
 task.wait(5);
-sendSystemMessageTo("Hello, world!", "ALL");
+chat.sendSystemMessageTo("Hello, world!", "ALL");
 
 // ServerStorage.Vehicles.MTT.Clone().Parent = game.Workspace;
