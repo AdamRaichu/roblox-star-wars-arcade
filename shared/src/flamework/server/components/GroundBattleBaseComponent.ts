@@ -1,5 +1,5 @@
 import { BaseComponent, Component } from "@flamework/components";
-import { SHIELD_VISIBLE_TRANSPARENCY } from "../../../constants";
+import { SHIELD_VISIBLE_TRANSPARENCY } from "../../constants";
 import { Direction } from "../../utils";
 import { BuildingTracker } from "../services";
 import { getNeutralTeam } from "../teams";

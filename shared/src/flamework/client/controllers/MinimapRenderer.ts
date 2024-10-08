@@ -1,5 +1,5 @@
 import { Controller } from "@flamework/core";
-import { MINIMAP_CONTROLLER_COMMANDS } from "../../../constants";
+import { MINIMAP_CONTROLLER_COMMANDS } from "../../constants";
 
 const fw = script.Parent?.Parent?.Parent as LocalFlameworkFolder;
 

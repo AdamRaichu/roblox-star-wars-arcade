@@ -1,7 +1,7 @@
 import { Components as _Components } from "@flamework/components";
 import { Dependency } from "@flamework/core";
-import { BASIC_BULLET_DAMAGE, HITBOX_TAG } from "../constants";
-import { getPointFromDistance, raycastBetweenPoints } from "../utils";
+import { BASIC_BULLET_DAMAGE, HITBOX_TAG } from "./constants";
+import { getPointFromDistance, raycastBetweenPoints } from "../old/utils";
 import { BuildingComponent, WithHealthComponent } from "./server/components";
 
 const CollectionService = game.GetService("CollectionService");

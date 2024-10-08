@@ -1,9 +1,14 @@
 import { Components as _Components } from "@flamework/components";
 import { Dependency, Flamework } from "@flamework/core";
-import { components, logic, sendSystemMessageTo, teams, utils } from "@rbxts/adamraichu__local_rbx-swa-common";
+import { components, logic, sendSystemMessageTo, teams, utils } from "@rbxts/adamraichu__local_rbx-swa-common/out/old";
 
 const ServerStorage = game.GetService("ServerStorage");
 const Players = game.GetService("Players");
+const RunService = game.GetService("RunService");
+
+if (RunService.IsClient()) {
+  error("This script is meant to be run on the server");
+}
 
 teams.createTeams();
 

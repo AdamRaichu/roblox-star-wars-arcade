@@ -1,9 +1,14 @@
 import { Component } from "@flamework/components";
-import { MINIMAP_ICON_IDS } from "../../../constants";
+import { MINIMAP_ICON_IDS } from "../../constants";
 import { Direction } from "../../utils";
 import { MinimapTracker } from "../services";
 import { sendSystemMessageTo } from "../system_chat";
 import { WithHealthComponent } from "./WithHealthComponent";
+
+const RunService = game.GetService("RunService");
+if (RunService.IsClient()) {
+  error("BuildingComponent.ts is a server-side component. It should not be loaded on the client.", 2);
+}
 
 @Component({ tag: "building-component-tag" })
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

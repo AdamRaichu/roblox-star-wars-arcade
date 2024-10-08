@@ -20,6 +20,10 @@ export enum MINIMAP_CONTROLLER_COMMANDS {
   BaseTeamChange = "base-team-change",
 }
 
+export enum MINIMAP_C2S_COMMANDS {
+  Refresh = "refresh",
+}
+
 export enum MINIMAP_ICON_IDS {
   Triangle,
   Square,
