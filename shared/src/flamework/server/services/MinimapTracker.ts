@@ -1,22 +1,20 @@
 import { Service } from "@flamework/core";
 import { MINIMAP_C2S_COMMANDS, MINIMAP_ICON_IDS } from "../../constants";
 import { WithHealthComponent } from "../components";
+import { EventListeningService } from "./helper/EventListeningService";
 
 const fw = script.Parent?.Parent?.Parent as LocalFlameworkFolder;
 const dataChannel = fw.events.MinimapDataChannel;
 
 @Service()
-export class MinimapTracker {
+export class MinimapTracker extends EventListeningService {
   private trackedComponents: WithHealthComponent<MinimapTrackedModel>[] = [];
   private icons: MINIMAP_ICON_IDS[] = [];
   private colors: Color3[] = [];
 
   constructor() {
+    super(dataChannel);
     print("MinimapTracker initialized");
-
-    dataChannel.OnServerEvent.Connect((player, ...args) => {
-      this.eventListener(player, ...args);
-    });
   }
 
   public registerComponent(
@@ -29,7 +27,7 @@ export class MinimapTracker {
     this.colors.push(color);
   }
 
-  private eventListener(player: Player, ...args: unknown[]) {
+  protected messageHandler(player: Player, ...args: unknown[]): void {
     if (!args) {
       this.w("Received event with no data.");
       return;

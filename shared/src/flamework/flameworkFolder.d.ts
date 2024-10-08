@@ -2,6 +2,7 @@ interface LocalFlameworkFolder extends Instance {
   events: Folder & {
     MinimapDataChannel: RemoteEvent;
     PlayerFireEvent: RemoteEvent;
+    SettingsUpdateChannel: RemoteEvent;
     SystemChatEvent: RemoteEvent;
   };
 }

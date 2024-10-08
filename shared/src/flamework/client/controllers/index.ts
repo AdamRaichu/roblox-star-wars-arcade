@@ -1,3 +1,4 @@
+import { ClientSettingsController } from "./ClientSettingsController";
 import { MinimapRenderer } from "./MinimapRenderer";
 
-export { MinimapRenderer };
+export { ClientSettingsController, MinimapRenderer };

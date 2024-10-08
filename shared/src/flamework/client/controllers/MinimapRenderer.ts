@@ -3,13 +3,12 @@ import { MINIMAP_CONTROLLER_COMMANDS } from "../../constants";
 
 const fw = script.Parent?.Parent?.Parent as LocalFlameworkFolder;
 
-const StarterGui = game.GetService("StarterGui");
 const Players = game.GetService("Players");
-/**
- * @client
- */
+
 @Controller()
 export class MinimapRenderer {
+  private renderScale = 1;
+
   constructor() {
     print("MinimapRenderer initialized");
 
@@ -24,7 +23,21 @@ export class MinimapRenderer {
   private getBaseGui(): ScreenGui {
     const baseGui = new Instance("ScreenGui");
     baseGui.Name = "MinimapGui";
+
+    const frame = new Instance("Frame");
+    frame.AnchorPoint = new Vector2(0.5, 0);
+    // TODO: Make this configurable.
+    frame.Position = new UDim2(0.5, 0, 0, 0);
+    frame.Size = new UDim2(0, this.scale(600), 0, this.scale(300));
+    frame.BackgroundColor3 = BrickColor.Black().Color;
+    frame.BackgroundTransparency = 0.5;
+    frame.Parent = baseGui;
+
     return baseGui;
+  }
+
+  private scale(value: number) {
+    return value * this.renderScale;
   }
 
   private dataHandler(..._args: unknown[]) {
