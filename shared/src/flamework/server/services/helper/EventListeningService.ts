@@ -1,6 +1,4 @@
-export abstract class EventListeningService<S extends S2C_ARGS> {
-  // private event: RemoteEvent;
-
+export abstract class EventListeningService<S extends RemoteEventArgs> {
   constructor(private event: RemoteEvent) {
     event.OnServerEvent.Connect((player, ...args) => {
       if (!args) {

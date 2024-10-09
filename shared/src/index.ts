@@ -1,5 +1,5 @@
 // empty
-import { BUILD_MENU_ICON_IDS, MINIMAP_ICON_IDS } from "./flamework/constants";
+import { BUILD_MENU_ICON_IDS, MINIMAP_ICON_IDS, MINIMAP_S2C_COMMANDS } from "./flamework/constants";
 
 declare global {
   export interface GameSettings {
@@ -117,7 +117,11 @@ declare global {
     positionY: number;
   }
 
-  interface S2C_ARGS {
-    [command: string]: unknown[];
+  interface RemoteEventArgs {
+    [command: string]: Array<unknown>;
+  }
+
+  interface MinimapS2CCommands extends RemoteEventArgs {
+    [MINIMAP_S2C_COMMANDS.RefreshFulfill]: [MinimapItem[]];
   }
 }

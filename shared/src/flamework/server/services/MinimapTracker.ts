@@ -6,19 +6,29 @@ import { EventListeningService } from "./helper/EventListeningService";
 const fw = script.Parent?.Parent?.Parent as LocalFlameworkFolder;
 const dataChannel = fw.events.MinimapDataChannel;
 
-interface MinimapS2CCommands extends S2C_ARGS {
-  [MINIMAP_S2C_COMMANDS.RefreshFulfill]: [MinimapItem[]];
-}
-
 @Service()
 export class MinimapTracker extends EventListeningService<MinimapS2CCommands> {
   private trackedComponents: WithHealthComponent<MinimapTrackedModel>[] = [];
   private icons: MINIMAP_ICON_IDS[] = [];
   private colors: Color3[] = [];
+  private areAllCornersRegistered = false;
+  private corners: PartWithAttachment[] = [];
 
   constructor() {
     super(dataChannel);
     print("MinimapTracker initialized");
+  }
+
+  public registerCorner(corner: PartWithAttachment) {
+    this.corners.push(corner);
+    if (this.areAllCornersRegistered) {
+      this.w(this.corners);
+      error("All minimap corners have already been registered.");
+    }
+
+    if (this.corners.size() === 4) {
+      this.areAllCornersRegistered = true;
+    }
   }
 
   public registerComponent(
@@ -31,16 +41,16 @@ export class MinimapTracker extends EventListeningService<MinimapS2CCommands> {
     this.colors.push(color);
   }
 
-  protected messageHandler(player: Player, ...args: defined[]): void {
-    const _command = args.shift();
+  protected messageHandler(player: Player, args: defined[]): void {
+    const command = args.shift();
 
-    if (typeOf(_command) !== "string") {
+    if (typeOf(command) !== "string") {
       this.w("_command was not a string.");
+      this.w(command);
       return;
     }
 
-    const command = args.shift() as string;
-    switch (command) {
+    switch (command as string) {
       case MINIMAP_C2S_COMMANDS.RefreshRequest:
         print("Received refresh request");
         this.sendMessageToClient(player, MINIMAP_S2C_COMMANDS.RefreshFulfill, this.getMapData());
