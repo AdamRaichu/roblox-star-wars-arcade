@@ -113,6 +113,11 @@ declare global {
   interface MinimapItem {
     iconId: MINIMAP_ICON_IDS;
     color: Color3;
-    position: Vector2;
+    positionX: number;
+    positionY: number;
+  }
+
+  interface S2C_ARGS {
+    [command: string]: unknown[];
   }
 }

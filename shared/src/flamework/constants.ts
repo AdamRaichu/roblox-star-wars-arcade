@@ -21,7 +21,10 @@ export enum MINIMAP_CONTROLLER_COMMANDS {
 }
 
 export enum MINIMAP_C2S_COMMANDS {
-  Refresh = "refresh",
+  RefreshRequest = "RefreshRequest",
+}
+export enum MINIMAP_S2C_COMMANDS {
+  RefreshFulfill = "RefreshFulfill",
 }
 
 export enum MINIMAP_ICON_IDS {
