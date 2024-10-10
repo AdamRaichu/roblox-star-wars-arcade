@@ -50,6 +50,7 @@ export class MinimapRenderer extends EventListeningController<MinimapS2CCommands
         const args = _args as MinimapS2CCommands[typeof MINIMAP_S2C_COMMANDS.RefreshFulfill];
         print("Received RefreshFulfill data from server.");
         print(args[0]);
+        print(args[1]);
         break;
       }
 

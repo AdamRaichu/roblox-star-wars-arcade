@@ -112,7 +112,7 @@ declare global {
 
   interface MinimapItem {
     iconId: MINIMAP_ICON_IDS;
-    color: Color3;
+    color: [number, number, number]; // Representation of a Color3
     positionX: number;
     positionY: number;
   }
@@ -121,7 +121,14 @@ declare global {
     [command: string]: Array<unknown>;
   }
 
+  interface MinimapBounds {
+    minX: number;
+    maxX: number;
+    minY: number;
+    maxY: number;
+  }
+
   interface MinimapS2CCommands extends RemoteEventArgs {
-    [MINIMAP_S2C_COMMANDS.RefreshFulfill]: [MinimapItem[]];
+    [MINIMAP_S2C_COMMANDS.RefreshFulfill]: [MinimapBounds, MinimapItem[]];
   }
 }

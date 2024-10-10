@@ -30,7 +30,6 @@
   "dependencies": {
     "@flamework/components": "^1.2.3",
     "@flamework/core": "^1.2.3",
-    "@flamework/networking": "^1.2.3",
     "@rbxts/adamraichu__local_rbx-swa-common": "file:../shared",
     "@rbxts/rbx-gui-library": "^0.2.8"
   }

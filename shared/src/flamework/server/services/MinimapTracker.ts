@@ -13,6 +13,12 @@ export class MinimapTracker extends EventListeningService<MinimapS2CCommands> {
   private colors: Color3[] = [];
   private areAllCornersRegistered = false;
   private corners: PartWithAttachment[] = [];
+  private bounds: MinimapBounds = {
+    minX: math.huge,
+    maxX: -math.huge,
+    minY: math.huge,
+    maxY: -math.huge,
+  };
 
   constructor() {
     super(dataChannel);
@@ -29,6 +35,8 @@ export class MinimapTracker extends EventListeningService<MinimapS2CCommands> {
     if (this.corners.size() === 4) {
       this.areAllCornersRegistered = true;
     }
+
+    this.calculateBounds();
   }
 
   public registerComponent(
@@ -53,7 +61,7 @@ export class MinimapTracker extends EventListeningService<MinimapS2CCommands> {
     switch (command as string) {
       case MINIMAP_C2S_COMMANDS.RefreshRequest:
         print("Received refresh request");
-        this.sendMessageToClient(player, MINIMAP_S2C_COMMANDS.RefreshFulfill, this.getMapData());
+        this.sendMessageToClient(player, MINIMAP_S2C_COMMANDS.RefreshFulfill, this.bounds, this.getMapData());
         break;
 
       default:
@@ -62,13 +70,32 @@ export class MinimapTracker extends EventListeningService<MinimapS2CCommands> {
     }
   }
 
+  private calculateBounds() {
+    this.corners.forEach((corner) => {
+      const wPos = corner.Attachment.WorldPosition;
+      if (wPos.X < this.bounds.minX) {
+        this.bounds.minX = wPos.X;
+      }
+      if (wPos.X > this.bounds.maxX) {
+        this.bounds.maxX = wPos.X;
+      }
+      if (wPos.Z < this.bounds.minY) {
+        this.bounds.minY = wPos.Z;
+      }
+      if (wPos.Z > this.bounds.maxY) {
+        this.bounds.maxY = wPos.Z;
+      }
+    });
+  }
+
   private getMapData() {
     const returnData: MinimapItem[] = [];
 
     this.trackedComponents.forEach((comp, index) => {
       const wPos = comp.instance.Hitbox.MinimapPositionBeacon.WorldPosition;
+      const color = this.colors[index];
       returnData.push({
-        color: this.colors[index],
+        color: [color.R, color.G, color.B],
         iconId: this.icons[index],
         positionX: wPos.X,
         positionY: wPos.Z,
